@@ -11,15 +11,3 @@ void Entity::AddComponent(Component* component)
 	components.push_front(component);
 	component->SetIterator(components.begin());
 }
-
-// Remove Component
-
-// Erase Component
-
-// Update
-
-// Handle Event
-
-// Render
-
-// Destructor

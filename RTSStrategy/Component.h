@@ -5,16 +5,16 @@
 #include <SDL.h>
 class Message;
 class Entity;
-class Game;
+class GameState;
 
 class Component {
 protected:
 	std::stack<Message> messageQueue;
 	Entity* entity;
 	std::list<Component*>::iterator iterator;
-	Game* game;
+	GameState* game;
 public:
-	Component(Entity* entity, Game* game) : entity(entity), game(game) {};
+	Component(Entity* entity, GameState* game) : entity(entity), game(game) {};
 	void SetIterator(std::list<Component*>::iterator it);
 	virtual void Update() = 0;
 	virtual void ProcessQueue() = 0;
