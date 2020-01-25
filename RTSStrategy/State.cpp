@@ -49,11 +49,17 @@ void State::AddEntity(Entity* entity) {
 }
 
 void State::RemoveEntity(Entity* entity) {
-	for (auto it = scene.begin(); it != scene.end(); ++it) {
-		if (*it == entity) {
-			scene.remove(entity);
-		}
+	auto it = scene.begin();
+	while (it != scene.end() && *it != entity) {
+		++it;
 	}
+	if (it != scene.end()) {
+		scene.erase(it);
+	}
+}
+
+void State::EraseEntity(std::list<Entity*>::iterator entity) {
+	scene.erase(entity);
 }
 
 // Handles the event given by the app
@@ -63,8 +69,14 @@ void State::HandleEvent(SDL_Event& event) {
 	}
 }
 
-// Updates the state of all entities in the scene
+// Empties the message stack and updates the state of all entities in the scene 
 void State::Update() {
+	while (!messageStack.empty()) {
+		Message* aux = messageStack.top();
+		aux->receiver.message
+		messageStack.pop();
+	}
+
 	for (auto it = scene.begin(); it != scene.end(); ++it) {
 		(*it)->Update();
 	}
@@ -75,6 +87,10 @@ void State::Render() const {
 	for (auto it = scene.begin(); it != scene.end(); ++it) {
 		(*it)->Render();
 	}
+}
+
+void State::AddMessage(Message* message) {
+	messageStack.push(message);
 }
 
 State::~State() {

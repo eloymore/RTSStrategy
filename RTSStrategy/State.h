@@ -26,9 +26,9 @@ public:
 
 	virtual void AddEntity(Entity* entity);
 	virtual void RemoveEntity(Entity* entity);
-	virtual void EraseEntity(std::list<Entity*>::iterator component);
+	virtual void EraseEntity(std::list<Entity*>::iterator entity);
 
-	virtual void AddMessage(const Message& message);
+	virtual void AddMessage(Message* message);
 
 	~State();
 };

@@ -1,27 +1,22 @@
 #pragma once
 
-#include <stack>
 #include <list>
 #include <SDL.h>
 class Message;
 class Entity;
-class GameState;
 
 class Component {
 protected:
-	std::stack<Message> messageQueue;
 	Entity* entity;
 	std::list<Component*>::iterator iterator;
-	GameState* game;
+
+	virtual void Copy(const Component& component) = 0;
 public:
-	Component(Entity* entity, GameState* game) : entity(entity), game(game) {};
+	Component(Entity* entity) : entity(entity) {};
 	void SetIterator(std::list<Component*>::iterator it);
-	virtual void Update() = 0;
-	virtual void ProcessQueue() = 0;
 	virtual void HandleEvent(const SDL_Event& event) = 0;
-	virtual void Render() = 0;
-	virtual void Receive(const Message& message) {
-		messageQueue.push(message);
-	};
+	virtual void Update() = 0;
+	virtual void Render() const = 0;
+	virtual void ReceiveMessage(Message* message) = 0;
 	virtual ~Component() {};
 };
